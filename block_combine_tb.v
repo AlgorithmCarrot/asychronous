@@ -7,31 +7,33 @@ module block_combine_tb;
   wire [data_width-1:0]data_out;
   initial begin
     rst_n = 0;
+    
     #10;
     rst_n = 1;
+    #2 ack_in = 0;
     req_in = 1;
-    ack_in = 0;
     data_in = 1;
+    
+    #10;
+    req_in = 0;
+    #2 ack_in = 1;
+    data_in = 2;
+    
     #10;
     req_in = 1;
-    ack_in = 1;
-    data_in = 2;
-    #10;
-    req_in = 0;
-    ack_in = 1;
+    #2 ack_in = 0;
     data_in = 3;
+    
     #10;
     req_in = 0;
-    ack_in = 0;
+    #2 ack_in = 1;
     data_in = 4;
+	
 	#10;
 	req_in = 1;
-	ack_in = 0;
+	#2 ack_in = 0;
 	data_in = 5;
-	#10;
-	req_in = 1;
-	ack_in = 1;
-	data_in = 6;
+	
   end
   
   block_combine blc(
