@@ -1,0 +1,73 @@
+--------------------------
+| Input -> Input Delays: |
+--------------------------
+Average delay =  2.00 events
+Worst-case delay =  3.00 events
+Input events with worst-case delay: rin+ rin-
+  > Input events preceding rin+: aout+(3) rin-(3)
+  > Input events preceding aout+: rin+(1) aout-(1)
+  > Input events preceding rin-: rin+(3) aout-(3)
+  > Input events preceding aout-: aout+(1) rin-(1)
+
+=========================
+# Gates for signal rout #
+=========================
+
+rout = rin (rout + aout') + aout' rout
+  > triggers(SET):     (rin+,aout-) -> rout+
+  > triggers(RESET):   (aout+,rin-) -> rout-
+  > 10 transistors (5 n, 5 p) + 2 inverters
+  > Estimated delay: rising = 41.00, falling = 31.29
+  > Speed independent (no timing assumptions)
+
+rout' = rin' (rout' + aout) + aout rout'
+[rout] = rout'        (output inverter)
+  > triggers(SET):     (aout+,rin-) -> rout-
+  > triggers(RESET):   (rin+,aout-) -> rout+
+  > 10 transistors (5 n, 5 p) + 2 inverters
+  > Estimated delay: rising = 32.33, falling = 30.96
+  > Speed independent (no timing assumptions)
+
+========================
+# Gates for signal ain #
+========================
+
+ain = lt
+  > triggers(SET):     lt+ -> ain+
+  > triggers(RESET):   lt- -> ain-
+  > 2 transistors (1 n, 1 p) + 1 inverters
+  > Estimated delay: rising = 19.33, falling = 16.00
+  > Speed independent (no timing assumptions)
+
+=======================
+# Gates for signal lt #
+=======================
+
+lt = rout
+  > triggers(SET):     rout+ -> lt+
+  > triggers(RESET):   rout- -> lt-
+  > 2 transistors (1 n, 1 p) + 1 inverters
+  > Estimated delay: rising = 19.33, falling = 16.00
+  > Speed independent (no timing assumptions)
+
+====================
+| Selected circuit |
+====================
+
+rout = rin (rout + aout') + aout' rout
+  > triggers(SET):     (rin+,aout-) -> rout+
+  > triggers(RESET):   (aout+,rin-) -> rout-
+  > 10 transistors (5 n, 5 p) + 2 inverters
+  > Estimated delay: rising = 41.00, falling = 31.29
+
+ain = lt
+  > triggers(SET):     lt+ -> ain+
+  > triggers(RESET):   lt- -> ain-
+  > 2 transistors (1 n, 1 p) + 1 inverters
+  > Estimated delay: rising = 19.33, falling = 16.00
+
+lt = rout
+  > triggers(SET):     rout+ -> lt+
+  > triggers(RESET):   rout- -> lt-
+  > 2 transistors (1 n, 1 p) + 1 inverters
+  > Estimated delay: rising = 19.33, falling = 16.00
